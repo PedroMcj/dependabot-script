@@ -46,6 +46,20 @@ branch = ENV["BRANCH"]
 # - terraform
 package_manager = ENV["PACKAGE_MANAGER"] || "bundler"
 
+# Set of dependenct grouping rules
+dependency_group = nil
+if ENV["GROUPING_RULE"]
+  rule_str = ENV["GROUPING_RULE"]
+  rules = {
+    "patterns" => [rule_str],
+    "dependency-type" => "production" # TODO: review this
+  }
+  dependency_group = Dependabot::DependencyGroup.new(
+    name: "default"
+    rules: rules,
+    applies-to: "version-updates"
+  )
+
 # Expected to be a JSON object passed to the underlying components
 options = JSON.parse(ENV["OPTIONS"] || "{}", {:symbolize_names => true})
 puts "Running with options: #{options}"
@@ -182,6 +196,7 @@ dependencies.select(&:top_level?).each do |dep|
     dependency_files: files,
     credentials: credentials,
     options: options,
+    dependency_group: dependency_group
   )
 
   next if checker.up_to_date?
