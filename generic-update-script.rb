@@ -54,9 +54,9 @@ if ENV["GROUPING_RULE"]
     "dependency-type" => "production" # TODO: review this
   }
   dependency_group = Dependabot::DependencyGroup.new(
-    name: "default"
+    name: "default",
     rules: rules,
-    applies-to: "version-updates"
+    applies_to: "version-updates"
   )
 end
 
