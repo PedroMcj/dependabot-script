@@ -59,6 +59,7 @@ if ENV["GROUPING_RULE"]
     rules: rules,
     applies-to: "version-updates"
   )
+end
 
 # Expected to be a JSON object passed to the underlying components
 options = JSON.parse(ENV["OPTIONS"] || "{}", {:symbolize_names => true})
