@@ -49,9 +49,8 @@ package_manager = ENV["PACKAGE_MANAGER"] || "bundler"
 # Set of dependenct grouping rules
 dependency_group = nil
 if ENV["GROUPING_RULE"]
-  rule_str = ENV["GROUPING_RULE"]
   rules = {
-    "patterns" => [rule_str],
+    "patterns" => [ENV["GROUPING_RULE"]],
     "dependency-type" => "production" # TODO: review this
   }
   dependency_group = Dependabot::DependencyGroup.new(
