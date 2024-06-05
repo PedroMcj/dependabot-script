@@ -167,7 +167,7 @@ end
 puts "Fetching #{package_manager} dependency files for #{repo_name}"
 fetcher = Dependabot::FileFetchers.for_package_manager(package_manager).new(
   source: source,
-  credentials: credentials,
+  credentials: Dependabot::Credential.new(credentials),
   options: options,
 )
 
