@@ -201,6 +201,7 @@ dependencies.select(&:top_level?).each do |dep|
   #########################################
   # Get update details for the dependency #
   #########################################
+  puts "Getting update details for #{dep}"
   checker = Dependabot::UpdateCheckers.for_package_manager(package_manager).new(
     dependency: dep,
     dependency_files: files,
@@ -210,7 +211,7 @@ dependencies.select(&:top_level?).each do |dep|
   )
 
   next if checker.up_to_date?
-
+  puts "\tis not up to date"
   requirements_to_unlock =
     if !checker.requirements_unlocked_or_can_be?
       if checker.can_update?(requirements_to_unlock: :none) then :none
@@ -222,7 +223,7 @@ dependencies.select(&:top_level?).each do |dep|
     end
 
   next if requirements_to_unlock == :update_not_possible
-
+  puts "\tupdate is possible"
   updated_deps = checker.updated_dependencies(
     requirements_to_unlock: requirements_to_unlock
   )
