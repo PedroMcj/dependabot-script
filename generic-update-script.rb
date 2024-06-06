@@ -189,13 +189,15 @@ puts commit.inspect
 ##############################
 # Parse the dependency files #
 ##############################
-puts "Parsing dependencies information"
-parser = Dependabot::FileParsers.for_package_manager(package_manager).new(
-  dependency_files: files,
-  source: source,
-  credentials: credentials,
-  options: options,
-)
+#puts "Parsing dependencies information"
+#parser = Dependabot::FileParsers.for_package_manager(package_manager).new(
+#  dependency_files: files,
+#  source: source,
+#  credentials: credentials,
+#  options: options,
+#)
+parser_class = Dependabot::Nuget::FileParser::ProjectFileParser
+parser = parser_class.new(dependency_files: files, source: source)
 
 dependencies = parser.parse
 
