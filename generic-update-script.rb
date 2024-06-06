@@ -197,7 +197,7 @@ puts commit.inspect
 #  options: options,
 #)
 parser_class = Dependabot::Nuget::FileParser
-parser = parser_class.new(dependency_files: files, source: source, repo_contents_path: "/")
+parser = parser_class.new(dependency_files: files, source: source, repo_contents_path: ENV["DIRECTORY_PATH"])
 
 dependencies = parser.parse
 puts dependencies.inspect
