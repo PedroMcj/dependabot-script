@@ -182,7 +182,9 @@ fetcher = Dependabot::FileFetchers.for_package_manager(package_manager).new(
 )
 
 files = fetcher.files
+puts files.inspect
 commit = fetcher.commit
+puts commit.inspect
 
 ##############################
 # Parse the dependency files #
