@@ -196,7 +196,7 @@ puts commit.inspect
 #  credentials: credentials,
 #  options: options,
 #)
-parser_class = Dependabot::Nuget::FileParser::ProjectFileParser
+parser_class = Dependabot::Nuget::FileParser
 parser = parser_class.new(dependency_files: files, source: source)
 
 dependencies = parser.parse
