@@ -109,7 +109,7 @@ elsif ENV["AZURE_ACCESS_TOKEN"]
   #  "password" => ENV["AZURE_ACCESS_TOKEN"]
   #}
 
-  [
+  credentials = [
     Dependabot::Credential.new({
       "type" => "git_source",
       "host" => azure_hostname,
