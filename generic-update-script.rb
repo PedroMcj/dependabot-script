@@ -197,6 +197,8 @@ parser = Dependabot::FileParsers.for_package_manager(package_manager).new(
 
 dependencies = parser.parse
 
+puts dependencies.inspect
+
 dependencies.select(&:top_level?).each do |dep|
   #########################################
   # Get update details for the dependency #
