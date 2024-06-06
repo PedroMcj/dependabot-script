@@ -102,12 +102,21 @@ elsif ENV["GITLAB_ACCESS_TOKEN"]
 elsif ENV["AZURE_ACCESS_TOKEN"]
   azure_hostname = ENV["AZURE_HOSTNAME"] || "dev.azure.com"
 
-  credentials << {
-    "type" => "git_source",
-    "host" => azure_hostname,
-    "username" => "x-access-token",
-    "password" => ENV["AZURE_ACCESS_TOKEN"]
-  }
+  #credentials << {
+  #  "type" => "git_source",
+  #  "host" => azure_hostname,
+  #  "username" => "x-access-token",
+  #  "password" => ENV["AZURE_ACCESS_TOKEN"]
+  #}
+
+  [
+    Dependabot::Credential.new({
+      "type" => "git_source",
+      "host" => azure_hostname,
+      "username" => "x-access-token",
+      "password" => ENV["AZURE_ACCESS_TOKEN"]
+    })
+  ]
 
   source = Dependabot::Source.new(
     provider: "azure",
