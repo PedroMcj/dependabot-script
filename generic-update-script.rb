@@ -1,6 +1,7 @@
 # This script is designed to loop through all dependencies in a GHE, GitLab or
 # Azure DevOps project, creating PRs where necessary.
 
+require "dependabot/credential"
 require "dependabot/file_fetchers"
 require "dependabot/file_parsers"
 require "dependabot/update_checkers"
@@ -11,12 +12,12 @@ require "gitlab"
 require "json"
 
 credentials = [
-  {
+  Dependabot::Credential.new({
     "type" => "git_source",
     "host" => "github.com",
     "username" => "x-access-token",
     "password" => ENV["GITHUB_ACCESS_TOKEN"] # A GitHub access token with read access to public repos
-  }
+  })
 ]
 
 # Full name of the repo you want to create pull requests for.
@@ -167,7 +168,7 @@ end
 puts "Fetching #{package_manager} dependency files for #{repo_name}"
 fetcher = Dependabot::FileFetchers.for_package_manager(package_manager).new(
   source: source,
-  credentials: Dependabot::Credential.new(credentials),
+  credentials: credentials,
   options: options,
 )
 
