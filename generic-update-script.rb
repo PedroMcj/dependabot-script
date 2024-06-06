@@ -173,9 +173,10 @@ else
 end
 
 git = Git.clone(
-  "https://#{ENV["AZURE_ACCESS_TOKEN"]}:x-oauth-basic@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service.git",
+  "https://#{ENV["AZURE_ACCESS_TOKEN"]}:x-oauth-basic@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service",
   config: ['user.name=pedro.m.silva', 'user.email=pedro.m.silva@aitec.pt']
 )
+
 
 ##############################
 # Fetch the dependency files #
