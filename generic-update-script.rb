@@ -294,8 +294,7 @@ dependencies.select(&:top_level?).each do |dep|
     dependency_files: files,
     credentials: credentials,
     options: options,
-    dependency_group: dependency_group,
-    source: source
+    dependency_group: dependency_group
   )
 
   next if checker.up_to_date?
