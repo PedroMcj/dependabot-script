@@ -13,6 +13,9 @@ require "json"
 require "git"
 require 'fileutils'
 require 'uri'
+require 'base64'
+require 'open3'
+
 
 credentials = [
   Dependabot::Credential.new({
@@ -187,38 +190,58 @@ end
 #git = `git clone https://{#{ENV["PAT_B64"]}}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service`
 #git = `git clone https://pedro.m.silva:#{ENV["AZURE_PWD"]}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service`
 
-repo_url = "https://devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service"
-destination_folder = "edoclink-service"
-personal_access_token = ENV['PAT_B64']
-username = "pedro.m.silva"
+## 2nd attempt
+#repo_url = "https://devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service"
+#destination_folder = "edoclink-service"
+#personal_access_token = ENV['PAT_B64']
+#username = "pedro.m.silva"
 
-if repo_url.nil? || destination_folder.nil? || personal_access_token.nil? || username.nil?
-  puts "One or more required environment variables are missing."
-  exit 1
-end
+#if repo_url.nil? || destination_folder.nil? || personal_access_token.nil? || username.nil?
+#  puts "One or more required environment variables are missing."
+#  exit 1
+#end
 
 # Ensure the destination folder does not already exist
-if Dir.exist?(destination_folder)
-  puts "Destination folder '#{destination_folder}' already exists. Please choose a different folder or delete the existing one."
-  exit 1
-end
+#if Dir.exist?(destination_folder)
+#  puts "Destination folder '#{destination_folder}' already exists. Please choose a different folder or delete the existing one."
+#  exit 1
+#end
 
 # Encode username and PAT to handle special characters
-encoded_username = URI.encode_www_form_component(username)
-encoded_token = URI.encode_www_form_component(personal_access_token)
+#encoded_username = URI.encode_www_form_component(username)
+#encoded_token = URI.encode_www_form_component(personal_access_token)
 
 # Prepare the Git clone command
-uri = URI(repo_url)
-uri.userinfo = "#{encoded_username}:#{encoded_token}"
-clone_command = "git clone #{uri} #{destination_folder}"
+#uri = URI(repo_url)
+#uri.userinfo = "#{encoded_username}:#{encoded_token}"
+#clone_command = "git clone #{uri} #{destination_folder}"
 
 # Execute the Git clone command
-puts "Cloning repository..."
-if system(clone_command)
-  puts "Repository cloned successfully to '#{destination_folder}'."
-else
-  puts "Failed to clone the repository."
-  exit 1
+#puts "Cloning repository..."
+#if system(clone_command)
+#  puts "Repository cloned successfully to '#{destination_folder}'."
+#else
+#  puts "Failed to clone the repository."
+#  exit 1
+#end
+
+# 3rd attempt
+# Replace "yourPAT" with your actual PAT
+my_pat = ENV["AZURE_ACCESS_TOKEN"]
+b64_pat = Base64.strict_encode64(":#{my_pat}")
+
+# Git clone command with authorization header
+git_command = "git -c http.extraHeader='Authorization: Basic #{b64_pat}' clone https://devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service"
+
+# Execute the git command
+Open3.popen3(git_command) do |stdin, stdout, stderr, wait_thr|
+  exit_status = wait_thr.value
+  if exit_status.success?
+    puts stdout.read
+  else
+    puts stderr.read
+    exit exit_status.to_i
+  end
 end
 
 
