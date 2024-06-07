@@ -172,7 +172,12 @@ else
   )
 end
 
-git = Git.clone("https://pedro.m.silva:#{ENV["AZURE_PWD"]}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service")
+# Clone the repo for the current project
+
+git = `git -c http.extraheader="AUTHORIZATION: Basic #{ENV["PAT_B64"]}" clone https://devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service`
+
+#global_opts = %w[-c http.extraheader="AUTHORIZATION: Basic #{ENV["PAT_B64"]}"]
+#git = Git.clone("https://pedro.m.silva:#{ENV["AZURE_PWD"]}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service")
 
 
 ##############################
