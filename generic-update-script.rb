@@ -173,9 +173,9 @@ else
 end
 
 # Clone the repo for the current project
-git_username = `git config --global user.name "pedro.m.silva"`
-git_email = `git config --global user.email "pedro.m.silva@aitec.pt"`
-git = `git -c http.extraheader="AUTHORIZATION: Basic #{ENV["PAT_B64"]}" clone https://devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service`
+git_username = `git remote set-url origin https://pedro.m.silva:#{ENV["PAT"]}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service`
+#git = `git -c http.extraheader="AUTHORIZATION: Basic #{ENV["PAT_B64"]}" clone https://devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service`
+git = `git clone https://devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service`
 
 #global_opts = %w[-c http.extraheader="AUTHORIZATION: Basic #{ENV["PAT_B64"]}"]
 #git = Git.clone("https://pedro.m.silva:#{ENV["AZURE_PWD"]}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service")
