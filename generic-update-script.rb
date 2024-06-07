@@ -281,7 +281,15 @@ dependencies.select(&:top_level?).each do |dep|
   # Get update details for the dependency #
   #########################################
   puts "Getting update details for #{dep}"
-  checker = Dependabot::UpdateCheckers.for_package_manager(package_manager).new(
+  #checker = Dependabot::UpdateCheckers.for_package_manager(package_manager).new(
+  #  dependency: dep,
+  #  dependency_files: files,
+  #  credentials: credentials,
+  #  options: options,
+  #  dependency_group: dependency_group
+  #)
+  checker_class = Dependabot::Nuget::UpdateChecker
+  checker = parser_class.new(
     dependency: dep,
     dependency_files: files,
     credentials: credentials,
