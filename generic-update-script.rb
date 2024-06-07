@@ -11,6 +11,8 @@ require "dependabot/omnibus"
 require "gitlab"
 require "json"
 require "git"
+require 'fileutils'
+require 'uri'
 
 credentials = [
   Dependabot::Credential.new({
@@ -183,7 +185,38 @@ end
 #global_opts = %w[-c http.extraheader="AUTHORIZATION: Basic #{ENV["PAT_B64"]}"]
 #git = Git.clone("https://#{ENV["PAT_B64"]}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service")
 #git = `git clone https://{#{ENV["PAT_B64"]}}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service`
-git = `git clone https://pedro.m.silva:#{ENV["AZURE_PWD"]}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service`
+#git = `git clone https://pedro.m.silva:#{ENV["AZURE_PWD"]}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service`
+
+repo_url = "https://devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service"
+destination_folder = "edoclink-service"
+personal_access_token = ENV['AZURE_ACCESS_TOKEN']
+username = "pedro.m.silva"
+
+if repo_url.nil? || destination_folder.nil? || personal_access_token.nil? || username.nil?
+  puts "One or more required environment variables are missing."
+  exit 1
+end
+
+# Ensure the destination folder does not already exist
+if Dir.exist?(destination_folder)
+  puts "Destination folder '#{destination_folder}' already exists. Please choose a different folder or delete the existing one."
+  exit 1
+end
+
+# Prepare the Git clone command
+uri = URI(repo_url)
+uri.userinfo = "#{username}:#{personal_access_token}"
+clone_command = "git clone #{uri} #{destination_folder}"
+
+# Execute the Git clone command
+puts "Cloning repository..."
+if system(clone_command)
+  puts "Repository cloned successfully to '#{destination_folder}'."
+else
+  puts "Failed to clone the repository."
+  exit 1
+end
+
 
 ##############################
 # Fetch the dependency files #
