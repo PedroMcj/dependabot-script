@@ -351,6 +351,9 @@ dependencies.select(&:top_level?).each do |dep|
     author_details: { name: "Dependabot", email: "no-reply@github.com" },
     label_language: true,
   )
+  puts "#############################################################################################"
+  puts updated_files
+  puts "#############################################################################################"
   pull_request = pr_creator.create
   puts " submitted"
 
