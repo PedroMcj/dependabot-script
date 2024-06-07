@@ -290,11 +290,11 @@ dependencies.select(&:top_level?).each do |dep|
   #)
   checker_class = Dependabot::Nuget::UpdateChecker
   checker = parser_class.new(
-    dependency: dep,
+    #dependency: dep,
     dependency_files: files,
     credentials: credentials,
     options: options,
-    dependency_group: dependency_group,
+    #dependency_group: dependency_group,
     source: source
   )
 
