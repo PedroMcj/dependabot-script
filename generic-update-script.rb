@@ -189,7 +189,7 @@ end
 
 repo_url = "https://devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service"
 destination_folder = "edoclink-service"
-personal_access_token = ENV['AZURE_ACCESS_TOKEN']
+personal_access_token = ENV['PAT_B64']
 username = "pedro.m.silva"
 
 if repo_url.nil? || destination_folder.nil? || personal_access_token.nil? || username.nil?
