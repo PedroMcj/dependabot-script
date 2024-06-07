@@ -331,7 +331,7 @@ dependencies.select(&:top_level?).each do |dep|
     dependency_files: files,
     credentials: credentials,
     options: options,
-    repo_contents_path: "edoclink-service"
+    repo_contents_path: "/home/dependabot/dependabot-script/edoclink-service"
   )
 
   updated_files = updater.updated_dependency_files
