@@ -319,7 +319,14 @@ dependencies.select(&:top_level?).each do |dep|
   # Generate updated dependency files #
   #####################################
   print "  - Updating #{dep.name} (from #{dep.version})…"
-  updater = Dependabot::FileUpdaters.for_package_manager(package_manager).new(
+  #updater = Dependabot::FileUpdaters.for_package_manager(package_manager).new(
+  #  dependencies: updated_deps,
+  #  dependency_files: files,
+  #  credentials: credentials,
+  #  options: options,
+  #)
+  updater_class = Dependabot::Nuget::FileUpdater
+  updater = updater_class.new(
     dependencies: updated_deps,
     dependency_files: files,
     credentials: credentials,
