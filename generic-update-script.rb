@@ -203,9 +203,13 @@ if Dir.exist?(destination_folder)
   exit 1
 end
 
+# Encode username and PAT to handle special characters
+encoded_username = URI.encode_www_form_component(username)
+encoded_token = URI.encode_www_form_component(personal_access_token)
+
 # Prepare the Git clone command
 uri = URI(repo_url)
-uri.userinfo = "#{username}:#{personal_access_token}"
+uri.userinfo = "#{encoded_username}:#{encoded_token}"
 clone_command = "git clone #{uri} #{destination_folder}"
 
 # Execute the Git clone command
