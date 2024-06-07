@@ -181,8 +181,8 @@ end
 #git = `git clone https://pedro.m.silva:#{ENV["PAT_B64"]}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service`
 
 #global_opts = %w[-c http.extraheader="AUTHORIZATION: Basic #{ENV["PAT_B64"]}"]
-git = Git.clone("https://#{ENV["PAT_B64"]}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service")
-
+#git = Git.clone("https://#{ENV["PAT_B64"]}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service")
+git = `git clone https://#{ENV["PAT_B64"]}@devops.aitec.pt/TFS2013_Migrated/PROD_EDOC4SP/_git/edoclink-service`
 
 ##############################
 # Fetch the dependency files #
