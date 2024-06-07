@@ -354,25 +354,25 @@ dependencies.select(&:top_level?).each do |dep|
   puts "#############################################################################################"
   puts updated_files
   puts "#############################################################################################"
-  pull_request = pr_creator.create
-  puts " submitted"
+  #pull_request = pr_creator.create
+  #puts " submitted"
 
-  next unless pull_request
+  #next unless pull_request
 
   # Enable GitLab "merge when pipeline succeeds" feature.
   # Merge requests created and successfully tested will be merge automatically.
-  if ENV["GITLAB_AUTO_MERGE"]
-    g = Gitlab.client(
-      endpoint: source.api_endpoint,
-      private_token: ENV["GITLAB_ACCESS_TOKEN"]
-    )
-    g.accept_merge_request(
-      source.repo,
-      pull_request.iid,
-      merge_when_pipeline_succeeds: true,
-      should_remove_source_branch: true
-    )
-  end
+  #if ENV["GITLAB_AUTO_MERGE"]
+  #  g = Gitlab.client(
+  #    endpoint: source.api_endpoint,
+  #    private_token: ENV["GITLAB_ACCESS_TOKEN"]
+  #  )
+  #  g.accept_merge_request(
+  #    source.repo,
+  #    pull_request.iid,
+  #    merge_when_pipeline_succeeds: true,
+  #    should_remove_source_branch: true
+  #  )
+  #end
 end
 
 puts "Done"
