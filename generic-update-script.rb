@@ -385,6 +385,14 @@ dependencies.select(&:top_level?).each do |dep|
   #end
 end
 
+# Debug classes:
+puts "Files class: #{updated_files.class}"
+puts "Files content: #{updated_files.inspect}"
+updated_files.each do |x|
+  puts "File class: #{x.class}"
+  puts "File content: #{x.inspect}"
+end
+
 #
 # Create a list of updated files
 #
