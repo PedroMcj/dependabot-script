@@ -341,7 +341,7 @@ dependencies.select(&:top_level?).each do |dep|
     repo_contents_path: "/home/dependabot/dependabot-script/edoclink-service"
   )
 
-  updated_files << updater.updated_dependency_files
+  updated_files = (updated_files << updater.updated_dependency_files).flatten!
 
   ########################################
   # Create a pull request for the update #
