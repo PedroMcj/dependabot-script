@@ -402,20 +402,21 @@ pr_creator = Dependabot::PullRequestCreator.new(
 pull_request = pr_creator.create
 puts " submitted"
 
-next unless pull_request
-
-Enable GitLab "merge when pipeline succeeds" feature.
-Merge requests created and successfully tested will be merge automatically.
-if ENV["GITLAB_AUTO_MERGE"]
-  g = Gitlab.client(
-    endpoint: source.api_endpoint,
-    private_token: ENV["GITLAB_ACCESS_TOKEN"]
-  )
-  g.accept_merge_request(
-    source.repo,
-    pull_request.iid,
-    merge_when_pipeline_succeeds: true,
-    should_remove_source_branch: true
-  )
+#next unless pull_request
+#
+#Enable GitLab "merge when pipeline succeeds" feature.
+#Merge requests created and successfully tested will be merge automatically.
+#if ENV["GITLAB_AUTO_MERGE"]
+#  g = Gitlab.client(
+#    endpoint: source.api_endpoint,
+#    private_token: ENV["GITLAB_ACCESS_TOKEN"]
+#  )
+#  g.accept_merge_request(
+#    source.repo,
+#    pull_request.iid,
+#    merge_when_pipeline_succeeds: true,
+#    should_remove_source_branch: true
+#  )
+#end
 
 puts "Done"
