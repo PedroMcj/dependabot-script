@@ -418,7 +418,7 @@ pr_creator = Dependabot::PullRequestCreator::Azure.new(
   custom_labels: nil,
   credentials: credentials,
   dependencies: updated_deps_res,
-  include_security_fixes: false,
+  includes_security_fixes: false,
   label_language: true,
   automerge_candidate: false
  ),
