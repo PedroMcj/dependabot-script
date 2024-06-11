@@ -321,7 +321,7 @@ dependencies.select(&:top_level?).each do |dep|
 
   #updated_deps_res = (updated_deps_res << updated_deps).flatten!
   updated_deps_res = updated_deps
-  
+
   #####################################
   # Generate updated dependency files #
   #####################################
@@ -393,15 +393,38 @@ end
 ########################################
 assignee = (ENV["PULL_REQUESTS_ASSIGNEE"] || ENV["GITLAB_ASSIGNEE_ID"])&.to_i
 assignees = assignee ? [assignee] : assignee
-pr_creator = Dependabot::PullRequestCreator.new(
+#pr_creator = Dependabot::PullRequestCreator.new(
+#  source: source,
+#  base_commit: commit,
+#  dependencies: updated_deps_res,
+#  files: updated_files,
+#  credentials: credentials,
+#  assignees: assignees,
+#  author_details: { name: "Dependabot", email: "no-reply@github.com" },
+#  label_language: true,
+#)
+pr_creator = Dependabot::PullRequestCreator::Azure.new(
+ source: source,
+ branch_name: "dependabot_update_branch",
+ base_commit: commit,
+ credentials: credentials,
+ files: updated_files,
+ commit_message: "test dependabot commit",
+ pr_description: "test dependabot PR",
+ pr_name: "dependabot versions bump",
+ author_details: { name: "Dependabot", email: "no-reply@github.com" },
+ labeler: Dependabot::PullRequestCreator::Labeler.new(
   source: source,
-  base_commit: commit,
-  dependencies: updated_deps_res,
-  files: updated_files,
+  custom_labels: nil,
   credentials: credentials,
-  assignees: assignees,
-  author_details: { name: "Dependabot", email: "no-reply@github.com" },
+  dependencies: updated_deps_res,
+  include_security_fixes: false,
   label_language: true,
+  automerge_candidate: false
+ ),
+ reviewers: nil,
+ assignees: assignees,
+ work_item: nil
 )
 pull_request = pr_creator.create
 puts " submitted"
