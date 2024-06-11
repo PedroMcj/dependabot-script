@@ -319,8 +319,9 @@ dependencies.select(&:top_level?).each do |dep|
     requirements_to_unlock: requirements_to_unlock
   )
 
-  updated_deps_res = (updated_deps_res << updated_deps).flatten!
-
+  #updated_deps_res = (updated_deps_res << updated_deps).flatten!
+  updated_deps_res = updated_deps
+  
   #####################################
   # Generate updated dependency files #
   #####################################
