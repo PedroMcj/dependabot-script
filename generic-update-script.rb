@@ -276,6 +276,9 @@ parser = parser_class.new(dependency_files: files, source: source, repo_contents
 dependencies = parser.parse
 puts dependencies.inspect
 
+# Create updated_files array
+updated_files = []
+
 dependencies.select(&:top_level?).each do |dep|
   #########################################
   # Get update details for the dependency #
@@ -334,23 +337,23 @@ dependencies.select(&:top_level?).each do |dep|
     repo_contents_path: "/home/dependabot/dependabot-script/edoclink-service"
   )
 
-  updated_files = updater.updated_dependency_files
+  updated_files << updater.updated_dependency_files
 
   ########################################
   # Create a pull request for the update #
   ########################################
-  assignee = (ENV["PULL_REQUESTS_ASSIGNEE"] || ENV["GITLAB_ASSIGNEE_ID"])&.to_i
-  assignees = assignee ? [assignee] : assignee
-  pr_creator = Dependabot::PullRequestCreator.new(
-    source: source,
-    base_commit: commit,
-    dependencies: updated_deps,
-    files: updated_files,
-    credentials: credentials,
-    assignees: assignees,
-    author_details: { name: "Dependabot", email: "no-reply@github.com" },
-    label_language: true,
-  )
+  #assignee = (ENV["PULL_REQUESTS_ASSIGNEE"] || ENV["GITLAB_ASSIGNEE_ID"])&.to_i
+  #assignees = assignee ? [assignee] : assignee
+  #pr_creator = Dependabot::PullRequestCreator::Azure.new(
+  #  source: source,
+  #  base_commit: commit,
+  #  #dependencies: updated_deps,
+  #  files: updated_files,
+  #  credentials: credentials,
+  #  assignees: assignees,
+  #  author_details: { name: "Dependabot", email: "no-reply@github.com" },
+  #  #label_language: true,
+  #)
   puts "#############################################################################################"
   puts updated_files
   puts "#############################################################################################"
@@ -374,5 +377,24 @@ dependencies.select(&:top_level?).each do |dep|
   #  )
   #end
 end
+
+#
+# Create a list of updated files
+#
+########################################
+# Create a pull request for the update #
+########################################
+assignee = (ENV["PULL_REQUESTS_ASSIGNEE"] || ENV["GITLAB_ASSIGNEE_ID"])&.to_i
+assignees = assignee ? [assignee] : assignee
+pr_creator = Dependabot::PullRequestCreator::Azure.new(
+  source: source,
+  base_commit: commit,
+  #dependencies: updated_deps,
+  files: updated_files,
+  credentials: credentials,
+  assignees: assignees,
+  author_details: { name: "Dependabot", email: "no-reply@github.com" },
+  #label_language: true,
+)
 
 puts "Done"
