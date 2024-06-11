@@ -278,6 +278,7 @@ puts dependencies.inspect
 
 # Create updated_files array
 updated_files = []
+updated_deps_res = []
 
 dependencies.select(&:top_level?).each do |dep|
   #########################################
@@ -317,6 +318,8 @@ dependencies.select(&:top_level?).each do |dep|
   updated_deps = checker.updated_dependencies(
     requirements_to_unlock: requirements_to_unlock
   )
+
+  updated_deps_res = (updated_deps_res << updated_deps).flatten!
 
   #####################################
   # Generate updated dependency files #
@@ -386,15 +389,15 @@ end
 ########################################
 assignee = (ENV["PULL_REQUESTS_ASSIGNEE"] || ENV["GITLAB_ASSIGNEE_ID"])&.to_i
 assignees = assignee ? [assignee] : assignee
-pr_creator = Dependabot::PullRequestCreator::Azure.new(
+pr_creator = Dependabot::PullRequestCreator.new(
   source: source,
   base_commit: commit,
-  #dependencies: updated_deps,
+  dependencies: updated_deps_res,
   files: updated_files,
   credentials: credentials,
   assignees: assignees,
   author_details: { name: "Dependabot", email: "no-reply@github.com" },
-  #label_language: true,
+  label_language: true,
 )
 
 puts "Done"
