@@ -417,6 +417,5 @@ if ENV["GITLAB_AUTO_MERGE"]
     merge_when_pipeline_succeeds: true,
     should_remove_source_branch: true
   )
-end
 
 puts "Done"
