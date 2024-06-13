@@ -435,7 +435,7 @@ pr_creator = Dependabot::PullRequestCreator::Azure.new(
  work_item: nil
 )
 pull_request = pr_creator.create
-puts pull_request&.to_json
+puts pull_request.body
 puts " submitted"
 
 #next unless pull_request
