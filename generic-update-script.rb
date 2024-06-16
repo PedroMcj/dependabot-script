@@ -434,8 +434,11 @@ pr_creator = Dependabot::PullRequestCreator::Azure.new(
  assignees: assignees,
  work_item: nil
 )
+
 pull_request = pr_creator.create
+target_api_url = pr_creator.get_api_url
 puts pull_request.body
+puts target_api_url
 puts " submitted"
 
 #next unless pull_request
