@@ -435,10 +435,11 @@ pr_creator = Dependabot::PullRequestCreator::Azure.new(
  work_item: nil
 )
 
-pull_request = pr_creator.create
+#pull_request = pr_creator.create
+puts "Calling get_api_url"
 target_api_url = pr_creator.get_api_url
-puts pull_request.body
-puts target_api_url
+puts "URL: #{target_api_url}"
+#puts pull_request.body
 puts " submitted"
 
 #next unless pull_request
