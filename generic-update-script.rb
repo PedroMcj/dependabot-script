@@ -33,7 +33,7 @@ repo_name = ENV["PROJECT_PATH"] # namespace/project
 directory = ENV["DIRECTORY_PATH"] || "/"
 
 # Branch to look at. Defaults to repo's default branch
-branch = "azure-pipelines"
+branch = "refs/heads/azure-pipelines"
 
 # Name of the package manager you'd like to do the update for. Options are:
 # - bundler
