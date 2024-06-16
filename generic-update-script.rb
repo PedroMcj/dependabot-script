@@ -33,7 +33,7 @@ repo_name = ENV["PROJECT_PATH"] # namespace/project
 directory = ENV["DIRECTORY_PATH"] || "/"
 
 # Branch to look at. Defaults to repo's default branch
-branch = "refs/heads/azure-pipelines"
+branch = "azure-pipelines"
 
 # Name of the package manager you'd like to do the update for. Options are:
 # - bundler
@@ -126,11 +126,11 @@ elsif ENV["AZURE_ACCESS_TOKEN"]
 
   source = Dependabot::Source.new(
     provider: "azure",
-    hostname: azure_hostname,
-    api_endpoint: "https://#{azure_hostname}/",
     repo: repo_name,
     directory: directory,
     branch: branch,
+    hostname: azure_hostname,
+    api_endpoint: "https://#{azure_hostname}/",
   )
 elsif ENV["BITBUCKET_ACCESS_TOKEN"]
   bitbucket_hostname = ENV["BITBUCKET_HOSTNAME"] || "bitbucket.org"
@@ -413,7 +413,7 @@ assignees = assignee ? [assignee] : assignee
 #)
 pr_creator = Dependabot::PullRequestCreator::Azure.new(
  source: source,
- branch_name: "dependabot_update_branch",
+ branch_name: "azure_pipelines",
  base_commit: commit,
  credentials: credentials,
  files: updated_files,
